@@ -1,26 +1,52 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import ListContacts from "./ListContacts";
+import PropTypes from "prop-types";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  state = {
+    contacts: [
+      {
+        id: "karen",
+        name: "Karen Isgrigg",
+        handle: "karen_isgrigg",
+        avatarURL: "https://picsum.photos/200",
+      },
+      {
+        id: "richard",
+        name: "Richard Kalehoff",
+        handle: "richardkalehoff",
+        avatarURL: "https://picsum.photos/id/237/200/300",
+      },
+      {
+        id: "tyler",
+        name: "Tyler McGinnis",
+        handle: "tylermcginnis",
+        avatarURL: "https://picsum.photos/seed/picsum/200/300",
+      },
+    ],
+  };
+  removeContact = (contact) => {
+    this.setState((currentState) => ({
+      contacts: currentState.contacts.filter((c) => {
+        return c.id !== contact.id;
+      }),
+    }));
+  };
+  render() {
+    return (
+      <div>
+        <ListContacts
+          contacts={this.state.contacts}
+          onDeleteContact={this.removeContact}
+        />
+      </div>
+    );
+  }
 }
+
+ListContacts.propTypes = {
+  contacts: PropTypes.array.isRequired,
+  onDeleteContact: PropTypes.func.isRequired,
+};
 
 export default App;
